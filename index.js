@@ -1,6 +1,8 @@
 let player1
 let player2
 const winner = document.getElementById('winner')
+const image = document.getElementById('image')
+const showBoard = document.getElementById('showBoard')
 
 document.getElementById('addNames').addEventListener('click', () => {
   event.preventDefault()
@@ -12,6 +14,10 @@ document.getElementById('addNames').addEventListener('click', () => {
 
   console.log(player1)
   console.log(player2)
+  image.classList.remove('show')
+  image.classList.add('hide')
+  showBoard.classList.remove('hide')
+  showBoard.classList.add('show')
 })
 
 const Player = (name, marker) => {
@@ -20,13 +26,13 @@ const Player = (name, marker) => {
 
 const gameBoard = () => {
   console.log('gameBoard start')
+  const showBoard = document.getElementById('game-board')
 
-  const gameBoardContainer = document.getElementById('game-board')
   for (let i = 1; i <= 9; i++) {
     const cell = document.createElement('div')
     cell.id = `${i}`
     cell.className = 'cell'
-    gameBoardContainer.append(cell)
+    showBoard.append(cell)
   }
 }
 gameBoard()
