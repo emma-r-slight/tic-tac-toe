@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/papercss@1.8.1/dist/paper.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="index.js"></script>
+    <title>Tic Tac Toe</title>
+  </head>
+  <body>
+    <div class="paper container-sm">
+      <header>
+        <div class="row flex-center" ;>
+          <h1 class="align-middle">Tic-Tac-Toe</h1>
+        </div>
+
+        <div class="row flex-center">
+          <div class="row flex-spaces child-borders">
+            <label class="paper-btn margin" for="modal-1">Open Modal!</label>
+          </div>
+          <input class="modal-state" id="modal-1" type="checkbox" />
+          <div class="modal">
+            <label class="modal-bg" for="modal-1"></label>
+            <div class="modal-body">
+              <label class="btn-close" for="modal-1">X</label>
+              <h4 class="modal-title">Modal Title</h4>
+              <h5 class="modal-subtitle">Modal Subtitle</h5>
+              <p class="modal-text">
+                This is an example of modal which is implemented with pure CSS!
+                :D
+              </p>
+              <label for="modal-1">Nice!</label>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="row flex-center">
+        <div class="card" style="width: 20rem">
+          <div class="card-body">
+            <div class="text-center"></div>
+            <h4 class="">It is <span id="player-turn">turn!</span></h4>
+            <div
+              id="game-board"
+              class="flex-spaces child-borders child-shadows"
+            ></div>
+            <button>New Game</button>
+          </div>
+          <div class="card-footer">
+            <span class="align-middle" id="winner"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
