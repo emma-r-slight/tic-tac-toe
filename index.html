@@ -19,7 +19,7 @@
           <h1 class="align-middle margin-small">Tic-Tac-Toe</h1>
         </div>
 
-        <div class="row flex-center">
+        <div class="row flex-center margin-small">
           <div class="row flex-spaces child-borders">
             <label class="paper-btn margin" for="players">Add players</label>
           </div>
@@ -64,8 +64,10 @@
           alt="cartoon figures playing a game"
         />
 
-        <div id="showBoard" class="hide" class="card" style="width: 20rem">
-          <div class="card-header" id="winner"></div>
+        <div id="showBoard" class="card hide" style="width: 20rem">
+          <div class="card-header hide" id="winner">
+            <h3><span id="won"></span> won!</h3>
+          </div>
           <div class="card-body">
             <div
               id="game-board"
@@ -78,7 +80,7 @@
 
           <div class="card-footer">
             <div class="text-center">
-              <p class="">It is <span id="player-turn">turn!</span></p>
+              <p class="">It is <span id="player-turn"></span>'s turn!</p>
             </div>
           </div>
         </div>
