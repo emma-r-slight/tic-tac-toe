@@ -21,7 +21,9 @@ img {
 }
 .cell {
   text-align: center;
-  font-size: 95px;
+  font-size: 70px;
+  width: 91px;
+  height: 91px;
 }
 
 /* .cell:nth-child(1),
