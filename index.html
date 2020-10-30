@@ -9,7 +9,7 @@
       href="https://unpkg.com/papercss@1.8.1/dist/paper.min.css"
     />
     <link rel="stylesheet" href="./style.css" />
-    <script defer src="index.js"></script>
+    <script defer src="index2.js"></script>
     <title>Tic Tac Toe</title>
   </head>
   <body>
@@ -18,42 +18,30 @@
         <div class="row flex-center" ;>
           <h1 class="align-middle margin-small">Tic-Tac-Toe</h1>
         </div>
-
-        <div class="row flex-center margin-small">
-          <div class="row flex-spaces child-borders">
-            <label class="paper-btn margin" for="players">Add players</label>
+        <div class="row flex-center">
+          <div class="form-group">
+            <label for="player-1">Player 1:</label>
+            <input
+              class="input-block"
+              type="text"
+              id="player-1"
+              name="player-1"
+            />
           </div>
-          <input class="modal-state" id="players" type="checkbox" />
-          <div class="modal">
-            <label class="modal-bg" for="players"></label>
-            <div class="modal-body">
-              <form>
-                <label class="btn-close" for="players">X</label>
-                <h4 class="modal-title">Tic-tac-toe players:</h4>
-                <h5 class="modal-subtitle">Please add your name.</h5>
-                <label for="player-1">Player 1:</label>
-                <input
-                  class="margin-large"
-                  type="text"
-                  id="player-1"
-                  name="player-1"
-                />
-                <label for="player-2">Player 2:</label>
-                <input
-                  class="margin-large"
-                  type="text"
-                  id="player-2"
-                  name="player-1"
-                />
-                <label class="paper-btn btn-secondary" id="addNames"
-                  >Add Names</label
-                >
-                <label class="paper-btn margin-small" for="players"
-                  >Start Game</label
-                >
-              </form>
-            </div>
+          <div class="form-group">
+            <label for="player-2">Player 2:</label>
+            <input
+              class="input-block"
+              type="text"
+              id="player-2"
+              name="player-2"
+            />
           </div>
+        </div>
+        <div class="row flex-center">
+          <label class="paper-btn margin-small" id="startGame"
+            >Start Game</label
+          >
         </div>
       </header>
       <div class="row flex-center">
