@@ -1,97 +1,149 @@
-const _playerCreate = (name, mark) => {
-  return { name, mark }
-}
+const GameBoard = (() => {
+  const boardArray = new Array(9).fill('')
 
-const boardFunctions = (() => {
-  const playerOne = _playerCreate('playerOne', 'X')
-  const playerTwo = _playerCreate('playerTwo', 'O')
+  const _showResults = (playerWon) => {
+    console.log(playerWon)
+    const winner = document.getElementById('resultBox')
+    winner.classList.remove('hide')
+    winner.classList.add('show')
+    const result = document.getElementById('result')
+    if (`${playerWon}` === 'Tied') {
+      result.textContent = 'Game Tied!'
+    } else {
+      result.textContent = `${playerWon} wins!`
+    }
+  }
 
-  const showBoard = document.getElementById('showBoard')
-  const image = document.getElementById('image')
-  const getBoard = document.getElementById('game-board')
-  const showWinner = document.getElementById('winner')
-  const cells = document.querySelectorAll('.cell')
-  const startButton = document.getElementById('startGame')
-  const firstName = document.getElementById('player-1')
-  const secondName = document.getElementById('player-2')
+  const checkWin = (playBoard, person, count) => {
+    const winner1 = 'X X X'
+    const winner2 = 'O O O'
 
-  const clickListeners = (() => {
-    const start = () => startButton.addEventListener('click', startGame)
+    const winCases = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ]
 
-    const checkCells = () =>
-      cells.forEach((cell) => {
-        cell.addEventListener('click', validateCell)
-      })
-    return { start }
-  })()
+    winCases.forEach((item) => {
+      let win = `${playBoard[item[0]]} ${playBoard[item[1]]} ${
+        playBoard[item[2]]
+      }`
+      if (win === winner1) {
+        winner = person.name
+        console.log(winner)
+        _showResults(winner)
+      } else if (win === winner2) {
+        winner = person.name
+        console.log(winner)
+        _showResults(winner)
+      }
+    })
+    if (count === 9) {
+      _showResults('TIED')
+    }
+  }
+
+  return { checkWin, boardArray }
+})()
+
+const DisplayController = (() => {
+  const Player = (name, symbol) => {
+    return { name, symbol }
+  }
 
   const hideImage = () => {
+    const image = document.getElementById('image')
     image.classList.remove('show')
     image.classList.add('hide')
   }
 
   const revealBoard = () => {
+    const showBoard = document.getElementById('showBoard')
     showBoard.classList.remove('hide')
     showBoard.classList.add('show')
   }
 
   const renderBoard = () => {
+    const getBoard = document.getElementById('game-board')
+    const gameArray = GameBoard.boardArray
+    console.log(gameArray)
     for (let i = 0; i < 9; i++) {
       const cell = document.createElement('div')
-      console.log(cell)
       cell.id = `${i}`
-      cell.className = 'cell'
+      cell.className = 'cell paper-btn'
+      cell.innerHTML = `${gameArray[i]}`
+      cell.addEventListener('click', (event) => {
+        play(event)
+      })
       getBoard.append(cell)
-      revealBoard()
+      console.log(cell)
+    }
+    revealBoard()
+  }
+  const firstName = document.getElementById('player-1')
+  const secondName = document.getElementById('player-2')
+  const playerOne = Player(firstName.value, 'X')
+  const playerTwo = Player(secondName.value, 'O')
+
+  const clickListeners = (() => {
+    const startButton = document.getElementById('startGame')
+    const start = () => startButton.addEventListener('click', startGame)
+
+    const resetButton = document.getElementById('reset')
+    const resetBtn = () => resetButton.addEventListener('click', resetBoard)
+    return { start, resetBtn }
+  })()
+
+  const resetBoard = () => {
+    const cells = document.getElementsByClassName('cell')
+    console.log(cells)
+    for (let cell of cells) {
+      cell.innerHTML = ''
     }
   }
 
   const startGame = () => {
+    const formNames = document.getElementById('nameForm')
+
     playerOne.name = firstName.value
     playerTwo.name = secondName.value
     hideImage()
     renderBoard()
-    console.log(playerOne)
-    console.log(playerTwo)
+    formNames.style.display = 'none'
+    firstName.value = ''
+    secondName.value = ''
+    return playerOne, playerTwo
   }
 
-  const validateCell = (event) => {
-    if (event.target.innerHTML === '') {
-      addMark(event)
+  let playerTurn = playerOne
+  let count = 0
+  const play = (event) => {
+    const changeTurn = () => {
+      if (playerTurn === playerOne) {
+        playerTurn = playerTwo
+      } else {
+        playerTurn = playerOne
+      }
+    }
+
+    const playBoard = GameBoard.boardArray
+    const displayName = document.getElementById('player-turn')
+    displayName.innerHTML = playerTurn.name
+    if (event.target.innerHTML !== '') return
+    else {
+      event.target.innerHTML = playerTurn.symbol
+      playBoard[event.target.id] = playerTurn.symbol
+      count++
+      let getWinner = GameBoard.checkWin(playBoard, playerTurn, count)
+      changeTurn()
     }
   }
 
   clickListeners.start()
-  return
+  clickListeners.resetBtn()
 })()
-
-const boardArray = new Array(9).fill('')
-const checkWIn = (player) => {
-  const win = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ]
-  win.forEach((winCase) => {
-    let check = `${board[winCase[0]]} ${board[winCase[1]]} ${board[winCase[2]]}`
-
-    if (check == player1Win) {
-      winner = player.name
-    } else if (check == player2win) {
-      winner = player.name
-    }
-  })
-  if (count === 9 && winner === null) {
-    winner = 'Tied'
-  }
-  if (winner !== null) {
-    showWinner.classList.remove('hide')
-    showWinner.classList.add('show')
-    document.getElementById('won').innerHTML = `${winner}`
-  }
-}

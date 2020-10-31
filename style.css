@@ -6,6 +6,9 @@
   display: block;
 }
 
+input {
+  background: white;
+}
 #game-board {
   width: 300px;
   height: 300px;
@@ -21,9 +24,10 @@ img {
 }
 .cell {
   text-align: center;
-  font-size: 95px;
+  font-size: 70px;
+  width: 91px;
+  height: 91px;
 }
-
 /* .cell:nth-child(1),
 .cell:nth-child(2),
 .cell:nth-child(4),
