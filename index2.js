@@ -9,7 +9,9 @@ const GameBoard = (() => {
     const result = document.getElementById('result')
     if (`${playerWon}` === 'Tied') {
       result.textContent = 'Game Tied!'
-    } else result.textContent = `${playerWon} wins!`
+    } else {
+      result.textContent = `${playerWon} wins!`
+    }
   }
 
   const checkWin = (playBoard, person, count) => {
@@ -93,9 +95,17 @@ const DisplayController = (() => {
     const start = () => startButton.addEventListener('click', startGame)
 
     const resetButton = document.getElementById('reset')
-    const resetBtn = () => resetButton.addEventListener('click', renderBoard)
+    const resetBtn = () => resetButton.addEventListener('click', resetBoard)
     return { start, resetBtn }
   })()
+
+  const resetBoard = () => {
+    const cells = document.getElementsByClassName('cell')
+    console.log(cells)
+    for (let cell of cells) {
+      cell.innerHTML = ''
+    }
+  }
 
   const startGame = () => {
     const formNames = document.getElementById('nameForm')
@@ -105,7 +115,8 @@ const DisplayController = (() => {
     hideImage()
     renderBoard()
     formNames.style.display = 'none'
-
+    firstName.value = ''
+    secondName.value = ''
     return playerOne, playerTwo
   }
 
@@ -134,4 +145,5 @@ const DisplayController = (() => {
   }
 
   clickListeners.start()
+  clickListeners.resetBtn()
 })()
