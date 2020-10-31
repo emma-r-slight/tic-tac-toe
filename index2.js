@@ -1,11 +1,11 @@
 const GameBoard = (() => {
-  const boardArray = new Array(9).fill('X')
+  const boardArray = new Array(9).fill('')
 
   const _allEqual = (a, b, c) => {
     return a === b && a === c && a !== ''
   }
 
-  const checkWIn = (board) => {
+  const checkWin = (board) => {
     let winner = null
     const check = [
       [0, 1, 2],
@@ -23,7 +23,7 @@ const GameBoard = (() => {
     }
   }
 
-  return { checkWIn, boardArray }
+  return { checkWin, boardArray }
 })()
 
 const DisplayController = (() => {
@@ -35,10 +35,6 @@ const DisplayController = (() => {
     const image = document.getElementById('image')
     image.classList.remove('show')
     image.classList.add('hide')
-  }
-
-  const validateCell = (event) => {
-    console.log('click')
   }
 
   const revealBoard = () => {
@@ -56,7 +52,9 @@ const DisplayController = (() => {
       cell.id = `${i}`
       cell.className = 'cell paper-btn'
       cell.innerHTML = `${gameArray[i]}`
-      cell.addEventListener('click', validateCell)
+      cell.addEventListener('click', (event) => {
+        play(event)
+      })
       getBoard.append(cell)
       console.log(cell)
     }
@@ -66,26 +64,47 @@ const DisplayController = (() => {
   const secondName = document.getElementById('player-2')
   const playerOne = Player(firstName.value, 'X')
   const playerTwo = Player(secondName.value, 'O')
-  const formNames = document.getElementById('nameForm')
 
   const clickListeners = (() => {
     const startButton = document.getElementById('startGame')
     const start = () => startButton.addEventListener('click', startGame)
-    return { start }
+
+    const resetButton = document.getElementById('reset')
+    const resetBtn = () => resetButton.addEventListener('click', renderBoard)
+    return { start, resetBtn }
   })()
 
   const startGame = () => {
+    const formNames = document.getElementById('nameForm')
+
     playerOne.name = firstName.value
     playerTwo.name = secondName.value
     hideImage()
     renderBoard()
     formNames.style.display = 'none'
 
-    const count = 0
-    let getWinner = GameBoard.checkWIn(GameBoard.boardArray)
-    const cells = document.getElementsByClassName('cell')
-
     return playerOne, playerTwo
+  }
+
+  let playerTurn = playerOne
+
+  const play = (event) => {
+    const changeTurn = () => {
+      if (playerTurn === playerOne) {
+        playerTurn = playerTwo
+      } else {
+        playerTurn = playerOne
+      }
+    }
+
+    const board = GameBoard.boardArray
+    const displayName = document.getElementById('player-turn')
+    displayName.innerHTML = playerTurn.name
+    event.target.innerHTML = playerTurn.symbol
+    board[event.target.id] = playerTurn.symbol
+    let getWinner = GameBoard.checkWin(board)
+    changeTurn()
+    const count = 0
   }
 
   clickListeners.start()
