@@ -1,13 +1,22 @@
 const GameBoard = (() => {
   const boardArray = new Array(9).fill('')
 
-  const _allEqual = (a, b, c) => {
-    return a === b && a === c && a !== ''
+  const _showResults = (playerWon) => {
+    console.log(playerWon)
+    const winner = document.getElementById('resultBox')
+    winner.classList.remove('hide')
+    winner.classList.add('show')
+    const result = document.getElementById('result')
+    if (`${playerWon}` === 'Tied') {
+      result.textContent = 'Game Tied!'
+    } else result.textContent = `${playerWon} wins!`
   }
 
-  const checkWin = (board) => {
-    let winner = null
-    const check = [
+  const checkWin = (playBoard, person, count) => {
+    const winner1 = 'X X X'
+    const winner2 = 'O O O'
+
+    const winCases = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -17,9 +26,23 @@ const GameBoard = (() => {
       [0, 4, 8],
       [2, 4, 6],
     ]
-    for (let i = 0; i < check.length; i++) {
-      if (_allEqual(board[check[i][0]], board[check[i][1]], board[check[i][2]]))
-        winner = board[check[i][0]]
+
+    winCases.forEach((item) => {
+      let win = `${playBoard[item[0]]} ${playBoard[item[1]]} ${
+        playBoard[item[2]]
+      }`
+      if (win === winner1) {
+        winner = person.name
+        console.log(winner)
+        _showResults(winner)
+      } else if (win === winner2) {
+        winner = person.name
+        console.log(winner)
+        _showResults(winner)
+      }
+    })
+    if (count === 9) {
+      _showResults('TIED')
     }
   }
 
@@ -87,7 +110,7 @@ const DisplayController = (() => {
   }
 
   let playerTurn = playerOne
-
+  let count = 0
   const play = (event) => {
     const changeTurn = () => {
       if (playerTurn === playerOne) {
@@ -97,14 +120,17 @@ const DisplayController = (() => {
       }
     }
 
-    const board = GameBoard.boardArray
+    const playBoard = GameBoard.boardArray
     const displayName = document.getElementById('player-turn')
     displayName.innerHTML = playerTurn.name
-    event.target.innerHTML = playerTurn.symbol
-    board[event.target.id] = playerTurn.symbol
-    let getWinner = GameBoard.checkWin(board)
-    changeTurn()
-    const count = 0
+    if (event.target.innerHTML !== '') return
+    else {
+      event.target.innerHTML = playerTurn.symbol
+      playBoard[event.target.id] = playerTurn.symbol
+      count++
+      let getWinner = GameBoard.checkWin(playBoard, playerTurn, count)
+      changeTurn()
+    }
   }
 
   clickListeners.start()
