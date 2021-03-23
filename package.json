@@ -21,6 +21,6 @@
     "browser-sync": "^2.26.13"
   },
   "dependencies": {
-    "jquery": "^3.5.1"
+    "jquery": "^3.6.0"
   }
 }
