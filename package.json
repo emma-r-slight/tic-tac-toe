@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/emma-r-slight/tic-tac-toe#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.13"
+    "browser-sync": "^3.0.0"
   },
   "dependencies": {
     "jquery": "^3.5.1"
